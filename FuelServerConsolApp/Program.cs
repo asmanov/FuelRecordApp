@@ -1,4 +1,6 @@
-﻿using System.Net;
+﻿using FuelResponseLibrary;
+using FuelServerConsolApp;
+using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
@@ -36,7 +38,47 @@ public class Program
                 var message = Encoding.UTF8.GetString(data, 0, bytes);
                 var user = JsonSerializer.Deserialize<Person>(message);
                 Console.WriteLine($"Size message: {size} byte");
-                Console.WriteLine($"User: {user.Name} user password: {user.Password}");
+                Console.WriteLine($"User: {user?.Name} user password: {user?.Password}");
+                using(FuelDbContext db = new FuelDbContext())
+                {
+                    var person = db.Persons.First(x => x.Name == user.Name && x.Password == user.Password);
+                    FirstServerResponse startdata = new FirstServerResponse();
+                    if (person == null)
+                    {
+                        startdata.ResultUser = "Неправильное имя или пароль";
+                    }
+                    else
+                    {
+                        startdata.ResultUser = "Ok";
+                        foreach (var item in db.Tracks)
+                        {
+                            startdata.tracks.Add(item);
+                        }
+                        foreach (var item in db.Locations)
+                        {
+                            startdata.locations.Add(item);
+                        }
+                    }
+                    var jsonResponse = JsonSerializer.Serialize(startdata);
+                    //пользователь в массив байтов
+                    byte[] responsedata = Encoding.UTF8.GetBytes(jsonResponse);
+                    //определяем размер данных
+                    byte[] responsesize = BitConverter.GetBytes(responsedata.Length);
+                    
+                    try
+                    {
+                        //отправляем размер данных
+                        await stream.WriteAsync(responsesize, 0, responsesize.Length);
+                        //отправляем данные
+                        await stream.WriteAsync(responsedata, 0, responsedata.Length);
+                        Console.WriteLine($"send {responsedata.Length} byte");
+                    }
+                    catch (Exception)
+                    {
+                        Console.WriteLine("Not send");
+                    }
+                    
+                }
             }
         }
         catch (Exception ex)

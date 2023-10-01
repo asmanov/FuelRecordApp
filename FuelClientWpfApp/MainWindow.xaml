@@ -4,7 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FuelClientWpfApp"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:viewmodel="clr-namespace:FuelClientWpfApp.ViewModel" 
+        xmlns:refuelinglibrary="clr-namespace:RefuelingLibrary;assembly=RefuelingLibrary" 
+        d:DataContext="{d:DesignInstance Type=viewmodel:FuelAppVM}"
         mc:Ignorable="d"
         Title="MainWindow" Height="700" Width="1000">
     <Grid Margin="0,0,-1,0">
@@ -25,7 +27,7 @@
                 <TextBlock Margin="16,0,0,0" VerticalAlignment="Center"
                   Text="Material Design In XAML Toolkit" />
 
-                <TextBox x:Name="personName"
+                <TextBox x:Name="personName" Text="{Binding PersonName, UpdateSourceTrigger=PropertyChanged}"
     Height="50"
     VerticalAlignment="Top"
     materialDesign:HintAssist.Hint="This is a text area"
@@ -33,20 +35,25 @@
     IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextBoxEnabledComboBox}"
     Style="{StaticResource MaterialDesignOutlinedTextBox}"
     TextWrapping="Wrap"
-    VerticalScrollBarVisibility="Auto" SelectionBrush="#FF259C37" Background="#FFAEF1C0" Foreground="#FF010410" Margin="300,0,20,0" Width="145" />
+    VerticalScrollBarVisibility="Auto" SelectionBrush="#FF259C37" Background="#FFAEF1C0" Foreground="#FF010410" Margin="300,0,10,0" Width="145" />
 
 
 
-                <PasswordBox x:Name="personPass"
-    materialDesign:HintAssist.HelperText="Not bound password"
-    materialDesign:HintAssist.Hint="Password"
-    materialDesign:TextFieldAssist.HasClearButton="True"
-    IsEnabled="{Binding ElementName=RevealPasswordOutlinedEnabled, Path=IsChecked}"
-    Style="{StaticResource MaterialDesignOutlinedRevealPasswordBox}" Background="#FFAEF1C0" Foreground="#FF010410" Width="146" />
-                <Button Width="99" Content="Log In"
+                <TextBox Text="{Binding PersonPass, UpdateSourceTrigger=PropertyChanged}"
+    Height="50"
+    VerticalAlignment="Top"
+    materialDesign:HintAssist.Hint="This is a text area"
+    AcceptsReturn="True"
+    IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextBoxEnabledComboBox}"
+    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+    TextWrapping="Wrap"
+    VerticalScrollBarVisibility="Auto" SelectionBrush="#FF259C37" Background="#FFAEF1C0" Foreground="#FF010410" Margin="10,0,10,0" Width="145"/>
+
+
+                <Button Width="99" Content="Log In" Command="{Binding LogInCommand}"
                     IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
                     Style="{StaticResource MaterialDesignPaperSecondaryLightButton}"
-                    ToolTip="Resource name: MaterialDesignPaperSecondaryLightButton" RenderTransformOrigin="0.5,0.5" Margin="20,0,0,0" Background="#FFAEF1C0" Height="45" Click="Button_Click" >
+                    ToolTip="Resource name: MaterialDesignPaperSecondaryLightButton" RenderTransformOrigin="0.5,0.5" Margin="10,0,0,0" Background="#FFAEF1C0" Height="45" >
                     <Button.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -59,13 +66,11 @@
             </StackPanel>
         </materialDesign:ColorZone>
         <StackPanel Grid.Row="1" Background="#FFA0ECCE">
-            <ComboBox Margin="30" Width="256"
-                  materialDesign:HintAssist.HelperText="Select city"
-                  materialDesign:HintAssist.Hint="Площадка"
-                  Style="{StaticResource MaterialDesignOutlinedComboBox}">
-                <ComboBoxItem Content="Item 1" />
-                <ComboBoxItem Content="Item 2" />
-                <ComboBoxItem Content="Item 3" />
+            <!--<ComboBox Margin="30, 10, 30, 10" Height="50" ItemsSource="{Binding Locations}" DisplayMemberPath="LocationName" Style="{StaticResource MaterialDesignOutlinedComboBox}"></ComboBox>-->
+            <ComboBox d:DataContext="{d:DesignInstance Type=viewmodel:FuelAppVM}" Margin="30,30,30,30" Width="256" ItemsSource="{Binding Locations}" DisplayMemberPath="LocationName"
+                  materialDesign:HintAssist.HelperText="Выберите место заправки"
+                  materialDesign:HintAssist.Hint="Место заправки"
+                  Style="{StaticResource MaterialDesignOutlinedComboBox}" >
             </ComboBox>
             <DatePicker Width="256" materialDesign:HintAssist.HelperText="Выберите дату заправки"
                   materialDesign:HintAssist.Hint="Дата заправки"
@@ -80,13 +85,10 @@
                     TextWrapping="Wrap"
                     VerticalScrollBarVisibility="Auto" Margin="0,30,0,0" FontWeight="Bold" />
             </StackPanel>
-            <ComboBox Margin="30,30,30,0" Width="256" 
+            <ComboBox d:DataContext="{d:DesignInstance Type=viewmodel:FuelAppVM}" Margin="30,30,30,0" Width="256" ItemsSource="{Binding Tracks}" DisplayMemberPath="RegNum"
                   materialDesign:HintAssist.HelperText="Выберите авто из списка"
                   materialDesign:HintAssist.Hint="Транспортное средство"
                   Style="{StaticResource MaterialDesignOutlinedComboBox}" >
-                <ComboBoxItem Content="Item 1" />
-                <ComboBoxItem Content="Item 2" />
-                <ComboBoxItem Content="Item 3" />
             </ComboBox>
             <TextBox  Height="50" Width="256"
                 VerticalAlignment="Top"
@@ -104,7 +106,7 @@
                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
                 TextWrapping="Wrap"
                 VerticalScrollBarVisibility="Auto" Margin="0,30,0,0" FontWeight="Bold" />
-            <Button Margin="30"
+            <Button Margin="30" 
                 IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                 Style="{StaticResource MaterialDesignFloatingActionSecondaryButton}"
                 ToolTip="MaterialDesignFloatingActionSecondaryButton">

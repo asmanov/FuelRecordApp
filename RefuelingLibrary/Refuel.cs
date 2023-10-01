@@ -5,11 +5,51 @@ namespace RefuelingLibrary
 {
     public class Refuel : INotifyPropertyChanged
     {
-        public int Id { get; set; }
-        public string Date { get; set; } = string.Empty;
-        public int? AddFuel { get; set; }
-        public int? OddFuel { get; set; }
-        public int? Odometr { get; set; }
+        private int id;
+        private string date;
+        private int? addFuel;
+        private int? odometr;
+
+        public int Id 
+        {
+            get { return id; }
+            set
+            {
+                id = value;
+                OnPropertyChanged("Id");
+            }
+        }
+        public string Date 
+        { 
+            get { return date; }
+            set
+            {
+                date = value;
+                OnPropertyChanged("Date");
+            } 
+        }
+        public int? AddFuel 
+        { 
+            get { return addFuel; } 
+            set
+            {
+                addFuel = value;
+                OnPropertyChanged("AddFuel");
+            }
+        }
+        public int? oddFuel 
+        { 
+            get { return oddFuel; }
+            set { oddFuel = value; OnPropertyChanged("OddFuel"); }
+        }
+        public int? Odometr 
+        { 
+            get { return odometr; } 
+            set
+            {
+                odometr = value; OnPropertyChanged("Odometr");
+            }
+        }
 
         public Track? Track { get; set; }
         public Location? Location { get; set; }
@@ -22,18 +62,82 @@ namespace RefuelingLibrary
         }
     }
 
-    public class Track
+    public class Track : INotifyPropertyChanged
     {
-        public int TrackId { get; set; }
-        public string TrackName { get; set; } = string.Empty;
-        public string RegNum { get; set; } = string.Empty;
-        public string? VIN { get; set; }
-        public int? VTunk { get; set; }
+        private int trackId;
+        private string trackName;
+        private string regNum;
+        private string? vin;
+        private int? vTunk;
+
+        public int TrackId 
+        { 
+            get { return trackId;} 
+            set
+            {
+                trackId = value; OnPropertyChanged("TrackId");
+            } 
+        }
+        public string TrackName 
+        { 
+            get { return trackName;}
+            set
+            {
+                trackName = value; OnPropertyChanged("TrackName");
+            }
+        } 
+        public string RegNum 
+        { 
+            get { return regNum; }
+            set
+            {
+                regNum = value; OnPropertyChanged("RegNum");
+            } 
+        } 
+        public string? VIN 
+        { 
+            get { return vin; } 
+            set
+            {
+                vin = value; OnPropertyChanged("VIN");
+            }
+        }
+        public int? VTunk 
+        { 
+            get { return vTunk;} 
+            set { vTunk = value; OnPropertyChanged("VTunk"); } 
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName] string prop = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+        }
     }
 
-    public class Location
+    public class Location : INotifyPropertyChanged
     {
-        public int LocationId { get; set; }
-        public string LocationName { get; set; } = string.Empty;
+        private int locationId;
+        private string locationName;
+
+        public int LocationId 
+        { 
+            get { return locationId; } 
+            set
+            {
+                locationId = value; OnPropertyChanged("Location");
+            }
+        }
+        public string LocationName 
+        { 
+            get { return locationName; } 
+            set { locationName = value; OnPropertyChanged("LocationName"); } 
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName] string prop = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+        }
     }
 }

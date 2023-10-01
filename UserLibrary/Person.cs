@@ -16,7 +16,7 @@ namespace UserLibrary
             get { return password; }
             set
             { 
-                password = GetSHA256(value, Name);
+                password = value;
             }
                 
         }
