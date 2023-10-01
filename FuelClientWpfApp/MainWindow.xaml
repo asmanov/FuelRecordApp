@@ -8,7 +8,7 @@
         xmlns:refuelinglibrary="clr-namespace:RefuelingLibrary;assembly=RefuelingLibrary" 
         d:DataContext="{d:DesignInstance Type=viewmodel:FuelAppVM}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="1000">
+        Title="MainWindow" Height="700" Width="1300">
     <Grid Margin="0,0,-1,0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"></ColumnDefinition>
@@ -28,26 +28,26 @@
                   Text="Material Design In XAML Toolkit" />
 
                 <TextBox x:Name="personName" Text="{Binding PersonName, UpdateSourceTrigger=PropertyChanged}"
-    Height="50"
-    VerticalAlignment="Top"
-    materialDesign:HintAssist.Hint="This is a text area"
-    AcceptsReturn="True"
-    IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextBoxEnabledComboBox}"
-    Style="{StaticResource MaterialDesignOutlinedTextBox}"
-    TextWrapping="Wrap"
-    VerticalScrollBarVisibility="Auto" SelectionBrush="#FF259C37" Background="#FFAEF1C0" Foreground="#FF010410" Margin="300,0,10,0" Width="145" />
+                    Height="50"
+                    VerticalAlignment="Top"
+                    materialDesign:HintAssist.Hint="This is a text area"
+                    AcceptsReturn="True"
+                    IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextBoxEnabledComboBox}"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                    TextWrapping="Wrap"
+                    VerticalScrollBarVisibility="Auto" SelectionBrush="#FF259C37" Background="#FFAEF1C0" Foreground="#FF010410" Margin="300,0,10,0" Width="145" />
 
 
 
                 <TextBox Text="{Binding PersonPass, UpdateSourceTrigger=PropertyChanged}"
-    Height="50"
-    VerticalAlignment="Top"
-    materialDesign:HintAssist.Hint="This is a text area"
-    AcceptsReturn="True"
-    IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextBoxEnabledComboBox}"
-    Style="{StaticResource MaterialDesignOutlinedTextBox}"
-    TextWrapping="Wrap"
-    VerticalScrollBarVisibility="Auto" SelectionBrush="#FF259C37" Background="#FFAEF1C0" Foreground="#FF010410" Margin="10,0,10,0" Width="145"/>
+                    Height="50"
+                    VerticalAlignment="Top"
+                    materialDesign:HintAssist.Hint="This is a text area"
+                    AcceptsReturn="True"
+                    IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextBoxEnabledComboBox}"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                    TextWrapping="Wrap"
+                    VerticalScrollBarVisibility="Auto" SelectionBrush="#FF259C37" Background="#FFAEF1C0" Foreground="#FF010410" Margin="10,0,10,0" Width="145"/>
 
 
                 <Button Width="99" Content="Log In" Command="{Binding LogInCommand}"
@@ -67,16 +67,18 @@
         </materialDesign:ColorZone>
         <StackPanel Grid.Row="1" Background="#FFA0ECCE">
             <!--<ComboBox Margin="30, 10, 30, 10" Height="50" ItemsSource="{Binding Locations}" DisplayMemberPath="LocationName" Style="{StaticResource MaterialDesignOutlinedComboBox}"></ComboBox>-->
-            <ComboBox d:DataContext="{d:DesignInstance Type=viewmodel:FuelAppVM}" Margin="30,30,30,30" Width="256" ItemsSource="{Binding Locations}" DisplayMemberPath="LocationName"
+            <ComboBox d:DataContext="{d:DesignInstance Type=viewmodel:FuelAppVM}" Margin="30,30,30,30" Width="256" ItemsSource="{Binding Locations}" 
+                      DisplayMemberPath="LocationName" SelectedValue="{Binding SelectedLocation}"
                   materialDesign:HintAssist.HelperText="Выберите место заправки"
                   materialDesign:HintAssist.Hint="Место заправки"
                   Style="{StaticResource MaterialDesignOutlinedComboBox}" >
             </ComboBox>
-            <DatePicker Width="256" materialDesign:HintAssist.HelperText="Выберите дату заправки"
+            <DatePicker Text="{Binding SelectedDate}"
+                  Width="256" materialDesign:HintAssist.HelperText="Выберите дату заправки"
                   materialDesign:HintAssist.Hint="Дата заправки"
                   Style="{StaticResource MaterialDesignOutlinedDatePicker}" />
             <StackPanel>
-                <TextBox  Height="50" Width="256"
+                <TextBox Text="{Binding EnterOddFuel}"  Height="50" Width="256"
                     VerticalAlignment="Top"
                     materialDesign:HintAssist.Hint="Заправлено топливо, л"
                     AcceptsReturn="True"
@@ -85,12 +87,13 @@
                     TextWrapping="Wrap"
                     VerticalScrollBarVisibility="Auto" Margin="0,30,0,0" FontWeight="Bold" />
             </StackPanel>
-            <ComboBox d:DataContext="{d:DesignInstance Type=viewmodel:FuelAppVM}" Margin="30,30,30,0" Width="256" ItemsSource="{Binding Tracks}" DisplayMemberPath="RegNum"
+            <ComboBox d:DataContext="{d:DesignInstance Type=viewmodel:FuelAppVM}" Margin="30,30,30,0" Width="256" 
+                      ItemsSource="{Binding Tracks}" DisplayMemberPath="RegNum" SelectedValue="{Binding SelectedTrack}"
                   materialDesign:HintAssist.HelperText="Выберите авто из списка"
                   materialDesign:HintAssist.Hint="Транспортное средство"
                   Style="{StaticResource MaterialDesignOutlinedComboBox}" >
             </ComboBox>
-            <TextBox  Height="50" Width="256"
+            <TextBox  Height="50" Width="256" Text="{Binding EnterOdometr}"
                 VerticalAlignment="Top"
                 materialDesign:HintAssist.Hint="Показания одометра, км"
                 AcceptsReturn="True"
@@ -98,7 +101,7 @@
                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
                 TextWrapping="Wrap"
                 VerticalScrollBarVisibility="Auto" Margin="0,30,0,0" FontWeight="Bold" />
-            <TextBox  Height="50" Width="256"
+            <TextBox  Height="50" Width="256" Text="{Binding EnterAddFuel}"
                 VerticalAlignment="Top"
                 materialDesign:HintAssist.Hint="Поступление топлива, л"
                 AcceptsReturn="True"
@@ -113,5 +116,40 @@
                 <materialDesign:PackIcon Kind="GasStationOutline" />
             </Button>
         </StackPanel>
+        <Grid Grid.Column="1" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Background="#FFAEF1C0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Margin="10, 10, 10,10" Text="Остаток топлива" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBox Margin="10, 10, 10,10" Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}" />
+                <TextBlock Margin="10, 10, 10,10"  Grid.Column="2" Text="Сегодня" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBox Margin="10, 10, 10,10" Grid.Column="3" Style="{StaticResource MaterialDesignOutlinedTextBox}" />
+            </Grid>
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                <ListView ItemsSource="{Binding refuelShows}" >
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Width="150" Header="Площадка" DisplayMemberBinding="{Binding LocationName}"/>
+                            <GridViewColumn Width="100" Header="Дата" DisplayMemberBinding="{Binding Date}"/>
+                            <GridViewColumn Width="130" Header="Гос. номер" DisplayMemberBinding="{Binding RegNum}"/>
+                            <GridViewColumn Width="155" Header="Заправлено, л" DisplayMemberBinding="{Binding OddFuel}"/>
+                            <GridViewColumn Width="195" Header="Показания одометра" DisplayMemberBinding="{Binding Odometr}"/>
+                            <GridViewColumn Width="220" Header="Поступление топлива, л" DisplayMemberBinding="{Binding AddFuel}"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </ScrollViewer>
+               
+                
+           
+        </Grid>
     </Grid>
 </Window>

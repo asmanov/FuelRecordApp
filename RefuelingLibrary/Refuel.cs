@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace RefuelingLibrary
@@ -54,6 +55,79 @@ namespace RefuelingLibrary
         public Track? Track { get; set; }
         public Location? Location { get; set; }
 
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName] string prop = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+        }
+    }
+
+    public class RefuelShow : INotifyPropertyChanged
+    {
+        private int id;
+        private string date;
+        private int? addFuel;
+        private int? odometr;
+        private string locationName;
+        private string regNum;
+        private int? oddFuel;
+
+        public int Id
+        {
+            get { return id; }
+            set
+            {
+                id = value;
+                OnPropertyChanged("Id");
+            }
+        }
+        public string Date
+        {
+            get { return date; }
+            set
+            {
+                date = value;
+                OnPropertyChanged("Date");
+            }
+        }
+        public int? AddFuel
+        {
+            get { return addFuel; }
+            set
+            {
+                addFuel = value;
+                OnPropertyChanged("AddFuel");
+            }
+        }
+        public int? OddFuel
+        {
+            get { return oddFuel; }
+            set { oddFuel = value; OnPropertyChanged("OddFuel"); }
+        }
+        public int? Odometr
+        {
+            get { return odometr; }
+            set
+            {
+                odometr = value; OnPropertyChanged("Odometr");
+            }
+        }
+
+        public string LocationName
+        {
+            get { return locationName; }
+            set { locationName = value; OnPropertyChanged("LocationName"); }
+        }
+
+        public string RegNum
+        {
+            get { return regNum; }
+            set
+            {
+                regNum = value; OnPropertyChanged("RegNum");
+            }
+        }
 
         public event PropertyChangedEventHandler? PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")

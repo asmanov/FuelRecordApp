@@ -22,6 +22,13 @@ namespace FuelClientWpfApp.ViewModel
         private TcpClient tcpClient;
         private ObservableCollection<Location>? locations;
         private ObservableCollection<Track>? tracks;
+        public ObservableCollection<RefuelShow>? refuelShows;
+        private Location selectedLocation;
+        private string selectedDate;
+        private Track selectedtrack;
+        private string enterOddFuel;
+        private string enterAddFuel;
+        private string enterOdometr;
 
         public ObservableCollection<Location>? Locations
         {
@@ -78,6 +85,66 @@ namespace FuelClientWpfApp.ViewModel
             {
                 personPass = value;
                 OnPropertyChanged("PersonPass");
+            }
+        }
+
+        public Location SelectedLocation
+        {
+            get { return selectedLocation; }
+            set
+            {
+                selectedLocation = value;
+                OnPropertyChanged("SelectedLocation");
+            }
+        }
+
+        public string SelectedDate
+        {
+            get { return selectedDate; }
+            set
+            {
+                selectedDate = value;
+                OnPropertyChanged("SelectedDate");
+            }
+        }
+
+        public Track SelectedTrack
+        {
+            get { return selectedtrack; }
+            set
+            {
+                selectedtrack = value;
+                OnPropertyChanged("SelectedTrack");
+            }
+        }
+
+        public string EnterOddFuel
+        {
+            get { return enterOddFuel; }
+            set
+            {
+                enterOddFuel = value;
+                OnPropertyChanged("EnterOddFuel");
+            }
+        }
+
+        public string EnterAddFuel
+        {
+            get { return enterAddFuel; }
+            set
+            {
+                enterAddFuel = value;
+                OnPropertyChanged("EnterAddFuel");
+            }
+        }
+
+        public string EnterOdometr
+        {
+            get { return enterOdometr; }
+            set
+            {
+                enterOdometr = value;
+                OnPropertyChanged("EnterOdometr");
             }
         }
 
@@ -144,6 +211,8 @@ namespace FuelClientWpfApp.ViewModel
                         Locations.Clear();
                         Tracks = new ObservableCollection<Track>();
                         Tracks.Clear();
+                        refuelShows = new ObservableCollection<RefuelShow>();
+                        //refuelShows.Clear();
                         foreach (var item in response.locations)
                         {
 
