@@ -9,25 +9,26 @@
         d:DataContext="{d:DesignInstance Type=viewmodel:FuelAppVM}"
         mc:Ignorable="d"
         Title="MainWindow" Height="700" Width="1300">
-    <Grid Margin="0,0,-1,0">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto"></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition></RowDefinition>
-        </Grid.RowDefinitions>
-        <materialDesign:ColorZone Grid.ColumnSpan="2" Padding="16"
+    <Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <materialDesign:ColorZone Grid.ColumnSpan="2" Padding="16"
               materialDesign:ElevationAssist.Elevation="Dp4"
               ClipToBounds="False" CornerRadius="10"
               Mode="PrimaryDark" Background="#FF269E46">
-            <StackPanel Orientation="Horizontal" Background="#FF2D9E49">
-                <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" />
-                <TextBlock Margin="16,0,0,0" VerticalAlignment="Center"
+                <StackPanel Orientation="Horizontal" Background="#FF2D9E49">
+                    <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" />
+                    <TextBlock Margin="16,0,0,0" VerticalAlignment="Center"
                   Text="Material Design In XAML Toolkit" />
 
-                <TextBox x:Name="personName" Text="{Binding PersonName, UpdateSourceTrigger=PropertyChanged}"
+                    <TextBox x:Name="personName" Text="{Binding PersonName, UpdateSourceTrigger=PropertyChanged}"
                     Height="50"
                     VerticalAlignment="Top"
                     materialDesign:HintAssist.Hint="This is a text area"
@@ -39,7 +40,7 @@
 
 
 
-                <TextBox Text="{Binding PersonPass, UpdateSourceTrigger=PropertyChanged}"
+                    <TextBox Text="{Binding PersonPass, UpdateSourceTrigger=PropertyChanged}"
                     Height="50"
                     VerticalAlignment="Top"
                     materialDesign:HintAssist.Hint="This is a text area"
@@ -50,35 +51,35 @@
                     VerticalScrollBarVisibility="Auto" SelectionBrush="#FF259C37" Background="#FFAEF1C0" Foreground="#FF010410" Margin="10,0,10,0" Width="145"/>
 
 
-                <Button Width="99" Content="Log In" Command="{Binding LogInCommand}"
+                    <Button Width="99" Content="Log In" Command="{Binding LogInCommand}"
                     IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
                     Style="{StaticResource MaterialDesignPaperSecondaryLightButton}"
                     ToolTip="Resource name: MaterialDesignPaperSecondaryLightButton" RenderTransformOrigin="0.5,0.5" Margin="10,0,0,0" Background="#FFAEF1C0" Height="45" >
-                    <Button.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform AngleX="0"/>
-                            <RotateTransform/>
-                            <TranslateTransform X="0"/>
-                        </TransformGroup>
-                    </Button.RenderTransform>
-                </Button>
-            </StackPanel>
-        </materialDesign:ColorZone>
-        <StackPanel Grid.Row="1" Background="#FFA0ECCE">
-            <!--<ComboBox Margin="30, 10, 30, 10" Height="50" ItemsSource="{Binding Locations}" DisplayMemberPath="LocationName" Style="{StaticResource MaterialDesignOutlinedComboBox}"></ComboBox>-->
-            <ComboBox d:DataContext="{d:DesignInstance Type=viewmodel:FuelAppVM}" Margin="30,30,30,30" Width="256" ItemsSource="{Binding Locations}" 
+                        <Button.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform AngleX="0"/>
+                                <RotateTransform/>
+                                <TranslateTransform X="0"/>
+                            </TransformGroup>
+                        </Button.RenderTransform>
+                    </Button>
+                </StackPanel>
+            </materialDesign:ColorZone>
+            <StackPanel Grid.Row="1" Background="#FFA0ECCE">
+                <!--<ComboBox Margin="30, 30, 30, 10" Height="50" ItemsSource="{Binding Locations}" DisplayMemberPath="LocationName" Style="{StaticResource MaterialDesignOutlinedComboBox}"></ComboBox>-->
+                <ComboBox d:DataContext="{d:DesignInstance Type=viewmodel:FuelAppVM}" Margin="30,30,30,30" Width="256" ItemsSource="{Binding Locations}" 
                       DisplayMemberPath="LocationName" SelectedValue="{Binding SelectedLocation}"
                   materialDesign:HintAssist.HelperText="Выберите место заправки"
                   materialDesign:HintAssist.Hint="Место заправки"
                   Style="{StaticResource MaterialDesignOutlinedComboBox}" >
-            </ComboBox>
-            <DatePicker Text="{Binding SelectedDate}"
+                </ComboBox>
+                <DatePicker Text="{Binding SelectedDate, Mode=TwoWay}" DisplayDateStart="01.01.2023" SelectedDateFormat="Short"
                   Width="256" materialDesign:HintAssist.HelperText="Выберите дату заправки"
                   materialDesign:HintAssist.Hint="Дата заправки"
                   Style="{StaticResource MaterialDesignOutlinedDatePicker}" />
-            <StackPanel>
-                <TextBox Text="{Binding EnterOddFuel}"  Height="50" Width="256"
+                <StackPanel>
+                    <TextBox Text="{Binding EnterOddFuel}"  Height="50" Width="256"
                     VerticalAlignment="Top"
                     materialDesign:HintAssist.Hint="Заправлено топливо, л"
                     AcceptsReturn="True"
@@ -86,14 +87,14 @@
                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
                     TextWrapping="Wrap"
                     VerticalScrollBarVisibility="Auto" Margin="0,30,0,0" FontWeight="Bold" />
-            </StackPanel>
-            <ComboBox d:DataContext="{d:DesignInstance Type=viewmodel:FuelAppVM}" Margin="30,30,30,0" Width="256" 
+                </StackPanel>
+                <ComboBox d:DataContext="{d:DesignInstance Type=viewmodel:FuelAppVM}" Margin="30,30,30,0" Width="256" 
                       ItemsSource="{Binding Tracks}" DisplayMemberPath="RegNum" SelectedValue="{Binding SelectedTrack}"
                   materialDesign:HintAssist.HelperText="Выберите авто из списка"
                   materialDesign:HintAssist.Hint="Транспортное средство"
                   Style="{StaticResource MaterialDesignOutlinedComboBox}" >
-            </ComboBox>
-            <TextBox  Height="50" Width="256" Text="{Binding EnterOdometr}"
+                </ComboBox>
+                <TextBox  Height="50" Width="256" Text="{Binding EnterOdometr}"
                 VerticalAlignment="Top"
                 materialDesign:HintAssist.Hint="Показания одометра, км"
                 AcceptsReturn="True"
@@ -101,7 +102,7 @@
                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
                 TextWrapping="Wrap"
                 VerticalScrollBarVisibility="Auto" Margin="0,30,0,0" FontWeight="Bold" />
-            <TextBox  Height="50" Width="256" Text="{Binding EnterAddFuel}"
+                <TextBox  Height="50" Width="256" Text="{Binding EnterAddFuel}"
                 VerticalAlignment="Top"
                 materialDesign:HintAssist.Hint="Поступление топлива, л"
                 AcceptsReturn="True"
@@ -109,47 +110,48 @@
                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
                 TextWrapping="Wrap"
                 VerticalScrollBarVisibility="Auto" Margin="0,30,0,0" FontWeight="Bold" />
-            <Button Margin="30" 
+                <Button Margin="30" Command="{Binding AddRefuelCommand}"
                 IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                 Style="{StaticResource MaterialDesignFloatingActionSecondaryButton}"
                 ToolTip="MaterialDesignFloatingActionSecondaryButton">
-                <materialDesign:PackIcon Kind="GasStationOutline" />
-            </Button>
-        </StackPanel>
-        <Grid Grid.Column="1" Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"></RowDefinition>
-                <RowDefinition></RowDefinition>
-            </Grid.RowDefinitions>
-            <Grid Background="#FFAEF1C0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition Width="2*"></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition Width="2*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <TextBlock Margin="10, 10, 10,10" Text="Остаток топлива" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <TextBox Margin="10, 10, 10,10" Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}" />
-                <TextBlock Margin="10, 10, 10,10"  Grid.Column="2" Text="Сегодня" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <TextBox Margin="10, 10, 10,10" Grid.Column="3" Style="{StaticResource MaterialDesignOutlinedTextBox}" />
+                    <materialDesign:PackIcon Kind="GasStationOutline" />
+                </Button>
+            </StackPanel>
+            <Grid Grid.Column="1" Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid Background="#FFAEF1C0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Margin="10, 10, 10,10" Text="Остаток топлива" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <TextBox Margin="10, 10, 10,10" Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}" />
+                    <TextBlock Margin="10, 10, 10,10"  Grid.Column="2" Text="Сегодня" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <TextBox Margin="10, 10, 10,10" Grid.Column="3" Style="{StaticResource MaterialDesignOutlinedTextBox}" />
+                </Grid>
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                    <ListView ItemsSource="{Binding DataShows}">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Width="150" Header="Площадка" DisplayMemberBinding="{Binding LocationName}"/>
+                                <GridViewColumn Width="100" Header="Дата" DisplayMemberBinding="{Binding Date}"/>
+                                <GridViewColumn Width="130" Header="Гос. номер" DisplayMemberBinding="{Binding RegNum}"/>
+                                <GridViewColumn Width="155" Header="Заправлено, л" DisplayMemberBinding="{Binding OddFuel}"/>
+                                <GridViewColumn Width="195" Header="Показания одометра" DisplayMemberBinding="{Binding Odometr}"/>
+                                <GridViewColumn Width="220" Header="Поступление топлива, л" DisplayMemberBinding="{Binding AddFuel}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </ScrollViewer>
+
+
+
             </Grid>
-            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                <ListView ItemsSource="{Binding refuelShows}" >
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Width="150" Header="Площадка" DisplayMemberBinding="{Binding LocationName}"/>
-                            <GridViewColumn Width="100" Header="Дата" DisplayMemberBinding="{Binding Date}"/>
-                            <GridViewColumn Width="130" Header="Гос. номер" DisplayMemberBinding="{Binding RegNum}"/>
-                            <GridViewColumn Width="155" Header="Заправлено, л" DisplayMemberBinding="{Binding OddFuel}"/>
-                            <GridViewColumn Width="195" Header="Показания одометра" DisplayMemberBinding="{Binding Odometr}"/>
-                            <GridViewColumn Width="220" Header="Поступление топлива, л" DisplayMemberBinding="{Binding AddFuel}"/>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-            </ScrollViewer>
-               
-                
-           
         </Grid>
     </Grid>
 </Window>

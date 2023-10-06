@@ -16,19 +16,20 @@ namespace FuelClientWpfApp.ViewModel
     internal class FuelAppVM : INotifyPropertyChanged
     {
         private RelayCommand logInCommand;
-        //private RelayCommand addRefuelCommand;
+        private RelayCommand addRefuelCommand;
         private string personName;
         private string personPass;
         private TcpClient tcpClient;
         private ObservableCollection<Location>? locations;
         private ObservableCollection<Track>? tracks;
-        public ObservableCollection<RefuelShow>? refuelShows;
+        private ObservableCollection<RefuelShow>? refuelShows;
         private Location selectedLocation;
-        private string selectedDate;
+        private DateTime selectedDate;
         private Track selectedtrack;
         private string enterOddFuel;
         private string enterAddFuel;
         private string enterOdometr;
+        private string selectedDatestring;
 
         public ObservableCollection<Location>? Locations
         {
@@ -48,7 +49,15 @@ namespace FuelClientWpfApp.ViewModel
                 OnPropertyChanged("Tracks");
             }
         }
-
+        public ObservableCollection<RefuelShow>? DataShows
+        {
+            get { return refuelShows; }
+            set
+            {
+                refuelShows = value;
+                OnPropertyChanged("DataShows");
+            }
+        }
 
         public RelayCommand LogInCommand
         {
@@ -59,14 +68,14 @@ namespace FuelClientWpfApp.ViewModel
             }
         }
 
-        //public RelayCommand AddRefuelCommand
-        //{
-        //    get
-        //    {
-        //        if (addRefuelCommand == null) addRefuelCommand = new RelayCommand();
-        //        return addRefuelCommand;
-        //    }
-        //}
+        public RelayCommand AddRefuelCommand
+        {
+            get
+            {
+                if (addRefuelCommand == null) addRefuelCommand = new RelayCommand(NewReFuel);
+                return addRefuelCommand;
+            }
+        }
 
         public string PersonName
         {
@@ -98,13 +107,23 @@ namespace FuelClientWpfApp.ViewModel
             }
         }
 
-        public string SelectedDate
+        public DateTime SelectedDate
         {
             get { return selectedDate; }
             set
             {
                 selectedDate = value;
                 OnPropertyChanged("SelectedDate");
+            }
+        }
+
+        public string SelectedDatestring
+        {
+            get { return selectedDatestring; }
+            set
+            {
+                selectedDatestring = value;
+                OnPropertyChanged("SelectedDatestring");
             }
         }
 
@@ -151,6 +170,20 @@ namespace FuelClientWpfApp.ViewModel
         public FuelAppVM()
         {
             
+        }
+
+        private void NewReFuel()
+        {
+            MessageBox.Show("Click button");
+            RefuelShow refuelShow = new RefuelShow();
+            SelectedDatestring = SelectedDate.ToString("d");
+            refuelShow.Date = SelectedDatestring;
+            refuelShow.AddFuel = EnterAddFuel;
+            refuelShow.OddFuel = EnterOddFuel;
+            refuelShow.Odometr = EnterOdometr;
+            refuelShow.LocationName = SelectedLocation.LocationName;
+            refuelShow.RegNum = SelectedTrack.RegNum;
+            DataShows?.Add(refuelShow);
         }
 
         private async void ButtonLogIn()
@@ -211,8 +244,8 @@ namespace FuelClientWpfApp.ViewModel
                         Locations.Clear();
                         Tracks = new ObservableCollection<Track>();
                         Tracks.Clear();
-                        refuelShows = new ObservableCollection<RefuelShow>();
-                        //refuelShows.Clear();
+                        DataShows = new ObservableCollection<RefuelShow>();
+                        
                         foreach (var item in response.locations)
                         {
 
@@ -223,6 +256,7 @@ namespace FuelClientWpfApp.ViewModel
 
                             Tracks.Add(item);
                         }
+                        
                     }
                     
                 }

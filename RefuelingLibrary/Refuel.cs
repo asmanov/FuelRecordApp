@@ -65,23 +65,13 @@ namespace RefuelingLibrary
 
     public class RefuelShow : INotifyPropertyChanged
     {
-        private int id;
-        private string date;
-        private int? addFuel;
-        private int? odometr;
-        private string locationName;
-        private string regNum;
-        private int? oddFuel;
+        private string date = "";
+        private string addFuel = "";
+        private string odometr = string.Empty;
+        private string locationName = string.Empty;
+        private string regNum = string.Empty;
+        private string oddFuel = string.Empty;
 
-        public int Id
-        {
-            get { return id; }
-            set
-            {
-                id = value;
-                OnPropertyChanged("Id");
-            }
-        }
         public string Date
         {
             get { return date; }
@@ -91,7 +81,7 @@ namespace RefuelingLibrary
                 OnPropertyChanged("Date");
             }
         }
-        public int? AddFuel
+        public string AddFuel
         {
             get { return addFuel; }
             set
@@ -100,12 +90,12 @@ namespace RefuelingLibrary
                 OnPropertyChanged("AddFuel");
             }
         }
-        public int? OddFuel
+        public string OddFuel
         {
             get { return oddFuel; }
             set { oddFuel = value; OnPropertyChanged("OddFuel"); }
         }
-        public int? Odometr
+        public string Odometr
         {
             get { return odometr; }
             set
