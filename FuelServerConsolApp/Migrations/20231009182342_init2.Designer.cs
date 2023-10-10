@@ -4,6 +4,7 @@ using FuelServerConsolApp;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FuelServerConsolApp.Migrations
 {
     [DbContext(typeof(FuelDbContext))]
-    partial class FuelDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231009182342_init2")]
+    partial class init2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,7 +65,7 @@ namespace FuelServerConsolApp.Migrations
                     b.Property<int?>("Odometr")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TrackId")
+                    b.Property<int>("TrackId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -137,7 +140,9 @@ namespace FuelServerConsolApp.Migrations
 
                     b.HasOne("RefuelingLibrary.Track", "Track")
                         .WithMany("Refuels")
-                        .HasForeignKey("TrackId");
+                        .HasForeignKey("TrackId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Location");
 

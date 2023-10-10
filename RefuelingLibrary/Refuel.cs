@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.CompilerServices;
 
 namespace RefuelingLibrary
@@ -7,9 +8,10 @@ namespace RefuelingLibrary
     public class Refuel : INotifyPropertyChanged
     {
         private int id;
-        private string date;
+        private DateTime date;
         private int? addFuel;
         private int? odometr;
+        private int? oddFuel;
 
         public int Id 
         {
@@ -20,7 +22,7 @@ namespace RefuelingLibrary
                 OnPropertyChanged("Id");
             }
         }
-        public string Date 
+        public DateTime Date 
         { 
             get { return date; }
             set
@@ -38,7 +40,7 @@ namespace RefuelingLibrary
                 OnPropertyChanged("AddFuel");
             }
         }
-        public int? oddFuel 
+        public int? OddFuel 
         { 
             get { return oddFuel; }
             set { oddFuel = value; OnPropertyChanged("OddFuel"); }
@@ -52,7 +54,10 @@ namespace RefuelingLibrary
             }
         }
 
+        public int? TrackId { get; set; }
         public Track? Track { get; set; }
+
+        public int LocationId { get; set; }
         public Location? Location { get; set; }
 
 
@@ -133,6 +138,7 @@ namespace RefuelingLibrary
         private string regNum;
         private string? vin;
         private int? vTunk;
+        public List<Refuel> Refuels { get; set; } = new();
 
         public int TrackId 
         { 
@@ -183,6 +189,7 @@ namespace RefuelingLibrary
     {
         private int locationId;
         private string locationName;
+        public List<Refuel> Refuels { get; set; } = new();
 
         public int LocationId 
         { 

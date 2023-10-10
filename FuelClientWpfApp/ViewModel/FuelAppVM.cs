@@ -4,6 +4,7 @@ using RefuelingLibrary;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Net.Sockets;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -24,12 +25,12 @@ namespace FuelClientWpfApp.ViewModel
         private ObservableCollection<Track>? tracks;
         private ObservableCollection<RefuelShow>? refuelShows;
         private Location selectedLocation;
-        private DateTime selectedDate;
+        private DateTime selectedDate = DateTime.Today;
         private Track selectedtrack;
-        private string enterOddFuel;
-        private string enterAddFuel;
-        private string enterOdometr;
-        private string selectedDatestring;
+        private string enterOddFuel = "0";
+        private string enterAddFuel = "0";
+        private string enterOdometr = "0";
+        private string selectedDatestring = "";
 
         public ObservableCollection<Location>? Locations
         {
@@ -172,18 +173,69 @@ namespace FuelClientWpfApp.ViewModel
             
         }
 
-        private void NewReFuel()
+        private async void NewReFuel()
         {
             MessageBox.Show("Click button");
             RefuelShow refuelShow = new RefuelShow();
-            SelectedDatestring = SelectedDate.ToString("d");
+            Refuel refuel = new Refuel();
+            SelectedDatestring = SelectedDate.ToString("dd.MM.yyyy");
+            refuel.Date = SelectedDate;
             refuelShow.Date = SelectedDatestring;
             refuelShow.AddFuel = EnterAddFuel;
+            int.TryParse(EnterAddFuel, out int num);
+            refuel.AddFuel = num;
+            EnterAddFuel = "0";
             refuelShow.OddFuel = EnterOddFuel;
+            int.TryParse(EnterOddFuel, out int num1);
+            refuel.OddFuel = num1;
+            EnterOddFuel = "0";
             refuelShow.Odometr = EnterOdometr;
-            refuelShow.LocationName = SelectedLocation.LocationName;
-            refuelShow.RegNum = SelectedTrack.RegNum;
+            int.TryParse(EnterOdometr, out int num2);
+            refuel.Odometr = num2;
+            EnterOdometr = "0";
+            if (SelectedLocation == null)
+            {
+                MessageBox.Show("Вы не выбрали место заправки.");
+                return;
+            }
+            else
+            {
+                refuelShow.LocationName = SelectedLocation.LocationName;
+                refuel.Location = SelectedLocation;
+            }
+            if (SelectedTrack != null)
+            {
+                refuelShow.RegNum = SelectedTrack.RegNum;
+                refuel.Track = SelectedTrack;
+                SelectedTrack = new Track();
+            }
+            else
+            {
+                refuelShow.RegNum = "";
+            }
             DataShows?.Add(refuelShow);
+            tcpClient = new TcpClient();
+            var jsonRefuel = JsonSerializer.Serialize<Refuel>(refuel);
+            try
+            {
+                await tcpClient.ConnectAsync("127.0.0.1", 4444);
+                var streamFuel = tcpClient.GetStream();
+                byte[] dataf = Encoding.UTF8.GetBytes(jsonRefuel);
+                //определяем размер данных
+                byte[] sizef = BitConverter.GetBytes(dataf.Length);
+                //отправляем размер данных
+                await streamFuel.WriteAsync(sizef, 0, sizef.Length);
+                //отправляем данные
+                await streamFuel.WriteAsync(dataf, 0, dataf.Length);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("");
+            }
+            finally
+            {
+                tcpClient.Close();
+            }
         }
 
         private async void ButtonLogIn()
@@ -240,6 +292,8 @@ namespace FuelClientWpfApp.ViewModel
                     }
                     else
                     {
+                        PersonName = "";
+                        PersonPass = "";
                         Locations = new ObservableCollection<Location>();
                         Locations.Clear();
                         Tracks = new ObservableCollection<Track>();
@@ -256,7 +310,10 @@ namespace FuelClientWpfApp.ViewModel
 
                             Tracks.Add(item);
                         }
-                        
+                        foreach (var item in response.refuelShows)
+                        {
+                            DataShows.Add(item);
+                        }
                     }
                     
                 }

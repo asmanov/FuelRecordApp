@@ -9,6 +9,7 @@
         d:DataContext="{d:DesignInstance Type=viewmodel:FuelAppVM}"
         mc:Ignorable="d"
         Title="MainWindow" Height="700" Width="1300">
+    
     <Grid>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -74,7 +75,7 @@
                   materialDesign:HintAssist.Hint="Место заправки"
                   Style="{StaticResource MaterialDesignOutlinedComboBox}" >
                 </ComboBox>
-                <DatePicker Text="{Binding SelectedDate, Mode=TwoWay}" DisplayDateStart="01.01.2023" SelectedDateFormat="Short"
+                <DatePicker Text="{Binding SelectedDate, Mode=TwoWay}" 
                   Width="256" materialDesign:HintAssist.HelperText="Выберите дату заправки"
                   materialDesign:HintAssist.Hint="Дата заправки"
                   Style="{StaticResource MaterialDesignOutlinedDatePicker}" />
@@ -135,11 +136,11 @@
                     <TextBox Margin="10, 10, 10,10" Grid.Column="3" Style="{StaticResource MaterialDesignOutlinedTextBox}" />
                 </Grid>
                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                    <ListView ItemsSource="{Binding DataShows}">
+                    <ListView ItemsSource="{Binding DataShows}" BorderBrush="#899A174D" Background="#FF60EFA4" Style="{DynamicResource MaterialDesignListView}" >
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Width="150" Header="Площадка" DisplayMemberBinding="{Binding LocationName}"/>
-                                <GridViewColumn Width="100" Header="Дата" DisplayMemberBinding="{Binding Date}"/>
+                                <GridViewColumn Width="100" Header="Дата" DisplayMemberBinding="{Binding Date}" />
                                 <GridViewColumn Width="130" Header="Гос. номер" DisplayMemberBinding="{Binding RegNum}"/>
                                 <GridViewColumn Width="155" Header="Заправлено, л" DisplayMemberBinding="{Binding OddFuel}"/>
                                 <GridViewColumn Width="195" Header="Показания одометра" DisplayMemberBinding="{Binding Odometr}"/>
