@@ -4,6 +4,7 @@ using FuelServerConsolApp;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FuelServerConsolApp.Migrations
 {
     [DbContext(typeof(FuelDbContext))]
-    partial class FuelDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231008121956_changeRe")]
+    partial class changeRe
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,16 +56,16 @@ namespace FuelServerConsolApp.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("LocationId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("OddFuel")
+                    b.Property<int?>("LocationId")
                         .HasColumnType("int");
 
                     b.Property<int?>("Odometr")
                         .HasColumnType("int");
 
                     b.Property<int?>("TrackId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("oddFuel")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -130,13 +133,11 @@ namespace FuelServerConsolApp.Migrations
             modelBuilder.Entity("RefuelingLibrary.Refuel", b =>
                 {
                     b.HasOne("RefuelingLibrary.Location", "Location")
-                        .WithMany("Refuels")
-                        .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("LocationId");
 
                     b.HasOne("RefuelingLibrary.Track", "Track")
-                        .WithMany("Refuels")
+                        .WithMany()
                         .HasForeignKey("TrackId");
 
                     b.Navigation("Location");
@@ -151,16 +152,6 @@ namespace FuelServerConsolApp.Migrations
                         .HasForeignKey("LocationId");
 
                     b.Navigation("Location");
-                });
-
-            modelBuilder.Entity("RefuelingLibrary.Location", b =>
-                {
-                    b.Navigation("Refuels");
-                });
-
-            modelBuilder.Entity("RefuelingLibrary.Track", b =>
-                {
-                    b.Navigation("Refuels");
                 });
 #pragma warning restore 612, 618
         }

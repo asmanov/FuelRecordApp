@@ -6,15 +6,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UserLibrary;
+using FuelResponseLibrary;
 
 namespace FuelServerConsolApp
 {
     public class FuelDbContext : DbContext
     {
-        DbSet<Person> Persons { get; set; }
-        DbSet<Track> Tracks { get; set; }
-        DbSet<Location> Locations { get; set; }
-        DbSet<Refuel> Refuels { get; set; }
+        public DbSet<Person> Persons { get; set; }
+        public DbSet<Track> Tracks { get; set; }
+        public DbSet<Location> Locations { get; set; }
+        public DbSet<Refuel> Refuels { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
